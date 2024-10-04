@@ -9,9 +9,11 @@ import android.widget.TextView
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+    lateinit var textView : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         // You can test your helper functions by  calling them from onCreate() and
         // printing their output to the Log, which is visible in the LogCat:
@@ -44,10 +46,16 @@ class MainActivity : AppCompatActivity() {
 
     // Create a view from an item in a collection, but recycle if possible (similar to an AdapterView's adapter)
     private fun getView(position: Int, recycledView: View?, collection: List<Int>, context: Context) =
-        (recycledView as? TextView ?: TextView(context).apply {
-            setPadding(5, 10, 10, 0)
-            textSize = 22f
-        }).apply {
+        textView.apply {
+            if (recycledView != null) {
+                textView = recycledView as TextView
+            } else {
+                textView = TextView(context)
+                setPadding(5, 10, 10, 0)
+                textSize = 22f
+            }
+
             text = collection[position].toString()
         }
+
 }
